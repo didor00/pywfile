@@ -1,73 +1,134 @@
-import tkinter
-import customtkinter
+import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt, QPoint
 import pymem
 
-# Настройка основного окна
-customtkinter.set_appearance_mode("Dark")
-app = customtkinter.CTk()
-app.geometry("700x300")
-app.title("GITHUB.COM/BLAST3X | ЭТОТ ИНСТРУМЕНТ БЕСПЛАТНЫЙ")
-app.resizable(False, False)
+class Ui_Dialog(QtWidgets.QDialog):
+    def setupUi(self):
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
+        self.setObjectName("Dialog")
+        self.resize(500, 183)
+        self.frame = QtWidgets.QFrame(self)
+        self.frame.setGeometry(QtCore.QRect(10, 10, 481, 161))
+        self.frame.setStyleSheet("QFrame { \n"
+"background-color: rgb(25, 25, 25);\n"
+"border-radius: 15px;\n"
+"}")
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.pushButton = QtWidgets.QPushButton(self.frame)
+        self.pushButton.setGeometry(QtCore.QRect(440, 0, 41, 31))
+        self.pushButton.setStyleSheet("background-color: rgb(25, 25, 25);\n"
+"border-radius: 15px;\n"
+"")
+        self.pushButton.setText("")
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.close)
+        self.label = QtWidgets.QLabel(self.frame)
+        self.label.setGeometry(QtCore.QRect(460, 10, 47, 13))
+        self.label.setStyleSheet("color: white;")
+        self.label.setObjectName("label")
+        self.lineEdit = QtWidgets.QLineEdit(self.frame)
+        self.lineEdit.setGeometry(QtCore.QRect(10, 40, 461, 30))
+        self.lineEdit.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit.setStyleSheet("QLineEdit {\n"
+"    background-color: rgb(28, 28, 28);\n"
+"    border-radius: 5px;\n"
+"    border: 2px solid rgb(27, 29, 35);\n"
+"    padding-left: 10px;\n"
+"    color: white;\n"
+"    border: 2px solid rgb(255, 59, 59);\n"
+"}")
+        self.lineEdit.setText("")
+        self.lineEdit.setObjectName("lineEdit")
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.frame)
+        self.lineEdit_2.setGeometry(QtCore.QRect(10, 80, 461, 30))
+        self.lineEdit_2.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit_2.setStyleSheet("QLineEdit {\n"
+"    background-color: rgb(28, 28, 28);\n"
+"    border-radius: 5px;\n"
+"    border: 2px solid rgb(27, 29, 35);\n"
+"    padding-left: 10px;\n"
+"    color: white;\n"
+"    border: 2px solid rgb(255, 59, 59);\n"
+"}")
+        self.lineEdit_2.setText("")
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_3 = QtWidgets.QLineEdit(self.frame)
+        self.lineEdit_3.setGeometry(QtCore.QRect(10, 120, 301, 30))
+        self.lineEdit_3.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit_3.setStyleSheet("QLineEdit {\n"
+"    background-color: rgb(28, 28, 28);\n"
+"    border-radius: 5px;\n"
+"    border: 2px solid rgb(27, 29, 35);\n"
+"    padding-left: 10px;\n"
+"    color: white;\n"
+"    border: 2px solid rgb(255, 59, 59);\n"
+"}")
+        self.lineEdit_3.setText("")
+        self.lineEdit_3.setObjectName("lineEdit_3")
+        self.pushButton_2 = QtWidgets.QPushButton(self.frame)
+        self.pushButton_2.setGeometry(QtCore.QRect(320, 120, 150, 30))
+        self.pushButton_2.setMinimumSize(QtCore.QSize(150, 30))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(9)
+        self.pushButton_2.setFont(font)
+        self.pushButton_2.setStyleSheet("QPushButton {\n"
+"    border-radius: 10px;    \n"
+"    background-color: rgb(255, 59, 59);\n"
+"    color: white;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(219, 55, 55);\n"
+"}\n"
+"QPushButton:pressed {    \n"
+"    background-color: rgb(255, 59, 59);\n"
+"    color: rgb(255, 59, 59);\n"
+"}")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.label_2 = QtWidgets.QLabel(self.frame)
+        self.label_2.setGeometry(QtCore.QRect(20, 10, 271, 16))
+        self.label_2.setStyleSheet("color: white;")
+        self.label_2.setObjectName("label_2")
 
-# Метка вверху
-label_top = customtkinter.CTkLabel(master=app, text="СДЕЛАНО GITHUB.COM/BLAST3X", text_color="#FF0000")
-label_top.place(relx=0.5, rely=0.05, anchor=tkinter.CENTER)
+        self.pushButton_2.clicked.connect(self.remove)
+        self.retranslateUi()
 
-# Метки для полей ввода
-label_proc = customtkinter.CTkLabel(master=app, text="Имя процесса (например, notepad.exe):", text_color="#FFFFFF")
-label_proc.place(relx=0.3, rely=0.2, anchor=tkinter.E)
+    def retranslateUi(self):
+        _translate = QtCore.QCoreApplication.translate
+        self.setWindowTitle(_translate("String Remover", "String Remover"))
+        self.label.setText(_translate("Dialog", "X"))
+        self.lineEdit.setPlaceholderText(_translate("Dialog", "PID"))
+        self.lineEdit_2.setPlaceholderText(_translate("Dialog", "Address"))
+        self.lineEdit_3.setPlaceholderText(_translate("Dialog", "Length"))
+        self.pushButton_2.setText(_translate("Dialog", "Remove"))
+        self.label_2.setText(_translate("Dialog", "String Remover v1.0 [Author: @bush1root]"))
 
-label_addr = customtkinter.CTkLabel(master=app, text="Адрес памяти (hex, например, 0x10000000):", text_color="#FFFFFF")
-label_addr.place(relx=0.3, rely=0.4, anchor=tkinter.E)
+    def remove(self):
+        try:
+            pid = int(self.lineEdit.text())  # PID как целое число
+            address = int(self.lineEdit_2.text(), 16)  # Адрес в hex
+            length = int(self.lineEdit_3.text())  # Длина как целое число
+            pm = pymem.Pymem(pid)  # Открытие процесса по PID
+            pm.write_string(address, bytes(length))  # Запись пустых байтов
+            print("Done!")
+        except Exception as e:
+            print(f"Error: {str(e)}")
 
-label_len = customtkinter.CTkLabel(master=app, text="Длина (например, 10):", text_color="#FFFFFF")
-label_len.place(relx=0.3, rely=0.6, anchor=tkinter.E)
+    def mousePressEvent(self, event):
+        self.oldPos = event.globalPos()
 
-# Поля ввода
-entry = customtkinter.CTkEntry(master=app, width=200, placeholder_text="notepad.exe")
-entry.place(relx=0.5, rely=0.2, anchor=tkinter.CENTER)
+    def mouseMoveEvent(self, event):
+        delta = QPoint(event.globalPos() - self.oldPos)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.oldPos = event.globalPos()
 
-entry1 = customtkinter.CTkEntry(master=app, width=200, placeholder_text="0x10000000")
-entry1.place(relx=0.5, rely=0.4, anchor=tkinter.CENTER)
-
-entry2 = customtkinter.CTkEntry(master=app, width=200, placeholder_text="10")
-entry2.place(relx=0.5, rely=0.6, anchor=tkinter.CENTER)
-
-# Текстовое поле для результата
-result_text = customtkinter.CTkTextbox(master=app, width=400, height=100)
-result_text.place(relx=0.5, rely=0.9, anchor=tkinter.CENTER)
-
-# Функция для кнопки
-def button_event():
-    procname = entry.get()
-    address_str = entry1.get()
-    length_str = entry2.get()
-
-    # Проверка корректности ввода
-    try:
-        address = int(address_str, 16)  # Преобразование hex-адреса
-        length = int(length_str)        # Преобразование длины
-        if length <= 0:
-            raise ValueError("Длина должна быть положительной")
-    except ValueError as e:
-        result_text.delete("1.0", tkinter.END)
-        result_text.insert("1.0", f"Ошибка: Некорректный адрес или длина ({str(e)})")
-        return
-
-    # Работа с процессом
-    try:
-        pm = pymem.Pymem(procname)  # Открытие процесса
-        rs = pm.read_string(address, length)  # Чтение строки
-        rb = pm.read_bytes(address, length)   # Чтение байтов
-        result_text.delete("1.0", tkinter.END)
-        result_text.insert("1.0", f"Прочитанная строка: {rs}\nПрочитанные байты: {rb}")
-    except Exception as e:
-        result_text.delete("1.0", tkinter.END)
-        result_text.insert("1.0", f"Ошибка: {str(e)}")
-
-# Кнопка
-button = customtkinter.CTkButton(master=app, text="Удалить строку", command=button_event)
-button.place(relx=0.5, rely=0.75, anchor=tkinter.CENTER)
-
-# Запуск приложения
-app.mainloop()
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    ui = Ui_Dialog()
+    ui.setupUi()
+    ui.show()
+    sys.exit(app.exec_())
