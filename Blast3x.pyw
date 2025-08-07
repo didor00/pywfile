@@ -1,7 +1,9 @@
-import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QPoint
 import pymem
+
+def close():
+     sys.exit(0);
 
 class Ui_Dialog(QtWidgets.QDialog):
     def setupUi(self):
@@ -25,7 +27,7 @@ class Ui_Dialog(QtWidgets.QDialog):
 "")
         self.pushButton.setText("")
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.close)
+        self.pushButton.clicked.connect(close);
         self.label = QtWidgets.QLabel(self.frame)
         self.label.setGeometry(QtCore.QRect(460, 10, 47, 13))
         self.label.setStyleSheet("color: white;")
@@ -94,40 +96,47 @@ class Ui_Dialog(QtWidgets.QDialog):
         self.label_2.setStyleSheet("color: white;")
         self.label_2.setObjectName("label_2")
 
-        self.pushButton_2.clicked.connect(self.remove)
-        self.retranslateUi()
+        self.pushButton_2.clicked.connect(self.remove);
+        self.retranslateUi(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
 
-    def retranslateUi(self):
+
+    def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("String Remover", "String Remover"))
+        Dialog.setWindowTitle(_translate("String Remover", "String Remover"))
         self.label.setText(_translate("Dialog", "X"))
         self.lineEdit.setPlaceholderText(_translate("Dialog", "PID"))
         self.lineEdit_2.setPlaceholderText(_translate("Dialog", "Address"))
-        self.lineEdit_3.setPlaceholderText(_translate("Dialog", "Length"))
+        self.lineEdit_3.setPlaceholderText(_translate("Dialog", "Lenght"))
         self.pushButton_2.setText(_translate("Dialog", "Remove"))
         self.label_2.setText(_translate("Dialog", "String Remover v1.0 [Author: @bush1root]"))
 
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
     def remove(self):
         try:
-            pid = int(self.lineEdit.text())  # PID как целое число
-            address = int(self.lineEdit_2.text(), 16)  # Адрес в hex
-            length = int(self.lineEdit_3.text())  # Длина как целое число
-            pm = pymem.Pymem(pid)  # Открытие процесса по PID
-            pm.write_string(address, bytes(length))  # Запись пустых байтов
-            print("Done!")
-        except Exception as e:
-            print(f"Error: {str(e)}")
+           pymem.memory.write_string(pymem.process.open(int(self.lineEdit.text(), 0)), int(self.lineEdit_2.text(), 0), bytes(int(self.lineEdit_3.text(), 0)))
+           print("Done!")
+        except:
+           print("Error :(")
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
 
     def mouseMoveEvent(self, event):
-        delta = QPoint(event.globalPos() - self.oldPos)
+        delta = QPoint (event.globalPos() - self.oldPos)
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
 
+
 if __name__ == "__main__":
+    import sys
     app = QtWidgets.QApplication(sys.argv)
+
     ui = Ui_Dialog()
     ui.setupUi()
     ui.show()
